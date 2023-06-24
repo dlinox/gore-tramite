@@ -26,31 +26,13 @@
                 color="red"
                 icon
                 size="small"
-                @click="router.delete('/sign-out')"
+                @click="router.delete('/a/sign-out')"
             >
                 <v-icon>mdi-logout</v-icon>
             </v-btn>
         </v-app-bar>
 
         <v-main>
-            <!-- <v-navigation-drawer  v-model="subDrawer">
-                <v-list nav>
-                    <v-list-item
-                        density="compact"
-                        v-for="item in subMenu"
-                        :title="item.title"
-                        color="primary"
-                        prepend-icon="mdi-circle-medium"
-                        :value="item.value"
-                        :class="
-                            router.page.url == item.to
-                                ? 'v-list-item--active text-primary'
-                                : ''
-                        "
-                        @click="router.get(item.to)"
-                    />
-                </v-list>
-            </v-navigation-drawer> -->
             <slot />
         </v-main>
 

@@ -1,0 +1,80 @@
+<template>
+    <div class="wrapper-login">
+        <v-card class="mx-auto my-auto" max-width="400">
+            <v-card-title class="pa-5">
+                <h1 class="text-center">Login Usuario</h1>
+                <!-- <Logo class="mx-auto"></Logo> -->
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-item>
+                <v-form>
+                    <pre>
+      {{ form.errors.message }}
+    </pre
+                    >
+                    <v-form ref="formRef" @submit.prevent="submit">
+                        <v-row no-gutters>
+                            <v-col cols="12" class="my-2">
+                                <span class="text-overline my-5">Ingresar</span>
+                            </v-col>
+                            <v-col cols="12" class="my-2">
+                                <v-text-field
+                                    v-model="form.document"
+                                    prepend-inner-icon="mdi-account"
+                                    label="Usuario"
+                                />
+                            </v-col>
+                            <v-col cols="12" class="my-2">
+                                <v-text-field
+                                    v-model="form.password"
+                                    type="password"
+                                    label="Contraseña"
+                                />
+                            </v-col>
+                            <v-col cols="12" class="my-2">
+                                <v-btn
+                                    type="submit"
+                                    block
+                                    variant="flat"
+                                    append-icon="mdi-login-variant"
+                                    :loading="form.processing"
+                                >
+                                    Ingresar
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-form>
+                </v-form>
+            </v-card-item>
+        </v-card>
+    </div>
+</template>
+<script setup>
+import Logo from "@/components/Logo.vue";
+import { useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+    document: "52662937",
+    password: "passsword",
+});
+
+const submit = async () => {
+    form.post("/sign-in", {
+        onError: (e) => {
+            console.log(e);
+        },
+        onSuccess: (e) => {
+            console.log(e);
+            console.log("redireccionando");
+        },
+    });
+};
+</script>
+<style lang="scss">
+.wrapper-login {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+</style>

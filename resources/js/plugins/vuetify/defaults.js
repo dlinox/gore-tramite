@@ -88,7 +88,7 @@ export default {
     VTextField: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
         clearable: true,
     },
