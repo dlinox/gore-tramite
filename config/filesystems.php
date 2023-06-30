@@ -30,6 +30,27 @@ return [
 
     'disks' => [
 
+        'avatar' => [ //Fotos de usuario
+            'driver' => 'local',
+            'root' => storage_path('app/uploads/avatars'),
+            'url' => env('APP_URL') . '/uploads/uploads-avatars',
+            'visibility' => 'public',
+        ],
+
+        'file' => [ //Archivos- documentos
+            'driver' => 'local',
+            'root' => storage_path('app/uploads/files'),
+            'url' => env('APP_URL') . '/uploads/uploads-files',
+            'visibility' => 'public',
+        ],
+
+        'template' => [
+            'driver' => 'local',
+            'root' => storage_path('app/uploads/templates'),
+            'url' => env('APP_URL') . '/uploads/uploads-templates',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -39,7 +60,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -71,6 +92,9 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('uploads/uploads-avatars') => storage_path('app/uploads/avatars'),
+        public_path('uploads/uploads-files') => storage_path('app/uploads/files'),
+        public_path('uploads/uploads-templates') => storage_path('app/uploads/templates'),
     ],
 
 ];

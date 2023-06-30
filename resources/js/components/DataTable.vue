@@ -31,27 +31,40 @@
                         </v-badge> -->
                     </div>
                 </th>
-                <th v-if="withAction">Acciones</th>
+                <th v-if="withAction" class="th-action">Acciones</th>
             </tr>
         </thead>
+
         <tbody>
-            <tr v-for="item in items.data" :key="item.name">
-                <template v-for="(header, j) in headers">
-                    <td>
-                        <slot :name="'item.' + header.value" :item="item">
-                            {{ item[header.value] }}
-                        </slot>
+            <template v-if="items.total == 0">
+                <tr>
+                    <td
+                        :colspan="
+                            withAction ? headers.length + 1 : headers.length
+                        "
+                    >
+                        <NoData />
                     </td>
-                </template>
-                <template v-if="withAction">
-                    <td>
-                        <slot name="action" :item="item">
-                        </slot>
-                    </td>
-                </template>
-            </tr>
+                </tr>
+            </template>
+            <template v-else>
+                <tr v-for="item in items.data" :key="item.name">
+                    <template v-for="(header, j) in headers">
+                        <td>
+                            <slot :name="'item.' + header.value" :item="item">
+                                 {{ item[header.value] }}
+                            </slot>
+                        </td>
+                    </template>
+                    <template v-if="withAction">
+                        <td>
+                            <slot name="action" :item="item"> </slot>
+                        </td>
+                    </template>
+                </tr>
+            </template>
         </tbody>
-        <tfoot>
+        <tfoot v-show="items.total > 0">
             <tr>
                 <td :colspan="withAction ? headers.length + 1 : headers.length">
                     <div class="d-flex justify-space-between align-center pt-3">
@@ -59,7 +72,7 @@
                             <v-select
                                 v-model="formfilters.perPage"
                                 label="Mostrar"
-                                density="compact"
+                                :clearable="false"
                                 placeholder="10"
                                 :items="[1, 5, 10, 50, 100, 500]"
                             />
@@ -79,6 +92,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import PaginationDataTable from "@/components/PaginationDataTable.vue";
+import NoData from "@/components/NoData.vue";
 import { pickBy, throttle, debounce } from "lodash";
 import { router } from "@inertiajs/vue3";
 
@@ -112,5 +126,8 @@ watch(
     &:hover {
         background-color: rgba(55, 55, 55, 0.04);
     }
+}
+.th-action {
+    width: 150px;
 }
 </style>

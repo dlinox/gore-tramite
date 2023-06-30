@@ -2,15 +2,11 @@
     <v-app id="inspire">
         <v-app-bar flat extended="">
             <v-container class="fill-height d-flex align-center">
-                <v-avatar
-                    class="me-10 ms-4"
-                    color="grey-darken-1"
-                    size="32"
-                    image="/images/logo.svg"
-                    rounded="0"
-                >
+                
+                <v-avatar density="x-large" rounded="0">
+                    <Logo></Logo>
                 </v-avatar>
-                <v-btn> Sistema de tramite </v-btn>
+            
                 <v-spacer></v-spacer>
                 <v-btn icon size="small" @click="router.delete('/sign-out')">
                     <v-icon>mdi-account</v-icon>
@@ -43,6 +39,7 @@
 </template>
 
 <script setup>
+import Logo from "../components/Logo.vue";
 import SwitchTheme from "../components/SwitchTheme.vue";
 import { router } from "@inertiajs/vue3";
 const items = ["Mis tramites", "Ayuda"];

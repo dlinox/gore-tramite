@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Configuracion extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'conf_id';
+    protected $table = 'configuraciones';
+    protected $fillable = [
+        'conf_periodo',
+    ];
 }

@@ -30,4 +30,10 @@ class Oficina extends Model
         'ofic_estado' => 'boolean',
         'ofic_publico' => 'boolean',
     ];
+
+    public $headers =  [
+        ['text' => "ID", 'value' => "ofic_id", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Nombre", 'value' => "ofic_nombre", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Siglas", 'value' => "ofic_siglas", 'short' => false, 'order' => 'ASC'],
+    ];
 }

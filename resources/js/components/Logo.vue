@@ -2,13 +2,7 @@
     <v-img
         :width="LogoWidth"
         aspect-ratio="16/9"
-        :src="
-            LogoTheme == 'auto'
-                ? logo
-                : LogoTheme == 'light'
-                ? '/images/logo.svg'
-                : '/images/logo-white.svg'
-        "
+        src="/images/logo.png"
     ></v-img>
 </template>
 <script setup>
@@ -22,7 +16,7 @@ const props = defineProps({
     },
 
     LogoWidth: {
-        type: Number,
+        type: [Number, String],
         default: 100,
     },
 });

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('ofic_siglas', 15)->unique();
             $table->boolean('ofic_publico')->default(0);
             $table->boolean('ofic_estado')->default(1);
+            $table->unsignedBigInteger('ofic_responsable')->nullable();
             $table->timestamps();
         });
     }

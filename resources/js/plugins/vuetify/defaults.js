@@ -96,41 +96,41 @@ export default {
     VSelect: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
         clearable: true,
     },
     VAutocomplete: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
         clearable: true,
     },
     VCombobox: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
         clearable: true,
     },
     VFileInput: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
     },
     VTextarea: {
         variant: "outlined",
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
         clearable: true,
     },
     VSwitch: {
         // set v-switch default color to primary
         density: "compact",
-        color: "secondary",
+        color: "black",
         hideDetails: "auto",
     },
     VIcon: {

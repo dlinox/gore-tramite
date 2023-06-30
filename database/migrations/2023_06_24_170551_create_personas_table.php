@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('pers_paterno', 60);
             $table->string('pers_materno', 60);
             $table->date('pers_fecha_nacimiento')->nullable();
-            $table->char('pers_nro_documento', 12)->unique();
-            $table->enum('pers_tipo_documento', ['RUC', 'DNI', 'CE'])->default('DNI');
+            $table->char('pers_dni', 8)->unique();
+            $table->char('pers_ruc', 11)->unique()->nullable();
+            //$table->char('pers_ce', 12)->unique();
             $table->string('pers_ugigeo')->nullable();
             $table->string('pers_direccion')->nullable();
             $table->char('pers_celular')->nullable()->unique();

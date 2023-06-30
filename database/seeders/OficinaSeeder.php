@@ -21,6 +21,7 @@ class OficinaSeeder extends Seeder
             'ofic_siglas' => 'MP',
             'ofic_publico' => true,
             'ofic_estado' => true,
+            'ofic_responsable' => 2
         ]);
 
         Oficina::create([
@@ -31,6 +32,7 @@ class OficinaSeeder extends Seeder
             'ofic_siglas' => 'OTI',
             'ofic_publico' => false,
             'ofic_estado' => true,
+            'ofic_responsable' => 1
         ]);
 
         Oficina::create([

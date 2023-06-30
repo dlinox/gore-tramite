@@ -2,8 +2,8 @@
     <div class="wrapper-login">
         <v-card class="mx-auto my-auto" max-width="400">
             <v-card-title class="pa-5">
-                <h1 class="text-center">Login Usuario</h1>
-                <!-- <Logo class="mx-auto"></Logo> -->
+                
+                <Logo  class="mx-auto"></Logo>
             </v-card-title>
             <v-divider></v-divider>
             <v-card-item>

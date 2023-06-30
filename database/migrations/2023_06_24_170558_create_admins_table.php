@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('rol_name')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();
+            $table->foreign('pers_id')->references('pers_id')->on('personas');
+            $table->foreign('ofic_id')->references('ofic_id')->on('oficinas');
             //$table->timestamp('email_verified_at')->nullable();
             //$table->rememberToken();
         });

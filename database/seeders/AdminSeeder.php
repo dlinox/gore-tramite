@@ -33,7 +33,7 @@ class AdminSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
             'password' => 'password',
-            'ofic_id' => 1,
+            'ofic_id' => 2,
             'pers_id' => 1,
             'ofic_name' => 'OTI',
             'rol_name' => 'Administrador',
@@ -46,13 +46,26 @@ class AdminSeeder extends Seeder
             'name' => 'Mesa User',
             'email' => 'mesa@gmail.com',
             'password' => 'password',
-            'ofic_id' => 2,
+            'ofic_id' => 1,
             'pers_id' => 2,
             'ofic_name' => 'MESA DE PARTES',
             'rol_name' => 'Mesa de partes',
             'active' => true,
         ]);
 
+
+        $mesa2 = Admin::create([
+            'name' => 'Mesa 2 User',
+            'email' => 'mesa2@gmail.com',
+            'password' => 'password',
+            'ofic_id' => 1,
+            'pers_id' => 3,
+            'ofic_name' => 'MESA DE PARTES',
+            'rol_name' => 'Mesa de partes',
+            'active' => true,
+        ]);
+
         $mesa->assignRole('Mesa de partes');
+        $mesa2->assignRole('Mesa de partes');
     }
 }

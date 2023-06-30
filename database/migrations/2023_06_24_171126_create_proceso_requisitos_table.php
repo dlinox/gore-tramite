@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('proceso_requisitos', function (Blueprint $table) {
-            $table->id();
+            $table->id('prre_id');
+            $table->string('prre_nombre');
+            $table->string('prre_descripcion')->nullable();
+            $table->enum('prre_tipo_archivo', ['PDF', 'WORD', 'ZIP']);
+            $table->unsignedBigInteger('prre_proc_id');
+            $table->boolean('prre_activo')->default(1);
             $table->timestamps();
+            $table->foreign('prre_proc_id')->references('proc_id')->on('procesos')->onDelete('cascade');;
         });
     }
 

@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('procesos', function (Blueprint $table) {
-            $table->id();
+            $table->id('proc_id');
+            $table->string('proc_nombre')->unique();
+            $table->string('proc_descripcion')->nullable();
+            $table->unsignedBigInteger('proc_docu_id'); //FK
+            $table->integer('proc_plazo')->nullable();
+            $table->boolean('proc_activo')->default(1);
             $table->timestamps();
+            $table->foreign('proc_docu_id')->references('docu_id')->on('documentos');
         });
     }
 

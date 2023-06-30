@@ -19,7 +19,7 @@
 
         <v-app-bar absolute elevation="0">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title> <Logo></Logo> </v-toolbar-title>
+            <v-toolbar-title> <Logo LogoWidth="120" /> </v-toolbar-title>
             <v-spacer></v-spacer>
             <SwitchTheme />
             <v-btn
@@ -124,10 +124,10 @@ watch(
 
 <style lang="scss">
 /* @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&display=swap'); */
-@import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap");
 #inspire {
     /* font-family: 'Urbanist', sans-serif; */
-    font-family: "Maven Pro", sans-serif;
+    font-family: "Inter", sans-serif;
 
     .v-navigation-drawer {
         /* width */
@@ -149,6 +149,10 @@ watch(
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+    }
+    .v-select__selection-text {
+        display: flex;
+        align-items: center;
     }
 }
 </style>

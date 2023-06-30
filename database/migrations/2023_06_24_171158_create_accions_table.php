@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requisitos', function (Blueprint $table) {
-            $table->id();
+        Schema::create('acciones', function (Blueprint $table) {
+            $table->id('acci_id');
+            $table->string('acci_nombre');
+            $table->boolean('acci_obligatorio')->default(0);
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requisitos');
+        Schema::dropIfExists('acciones');
     }
 };

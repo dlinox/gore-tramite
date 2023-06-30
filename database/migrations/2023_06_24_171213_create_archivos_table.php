@@ -6,20 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('archivos', function (Blueprint $table) {
-            $table->id();
+            $table->id('arch_id');
+            $table->string('arch_nombre', 80);
+            $table->string('arch_path');
+            $table->char('arch_extencion', 8);
+            $table->unsignedBigInteger('arch_tamanio');
+            $table->string('arch_mimetype')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('archivos');

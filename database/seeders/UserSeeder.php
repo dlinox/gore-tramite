@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             User::create([
                 'name' => $username,
                 'email' => $persona->pers_correo,
-                'document' => $persona->pers_nro_documento,
+                'document' => $persona->pers_dni,
                 'email_verified_at' => now(),
                 'password' => 'password',
                 'pers_id' => $persona->pers_id,
