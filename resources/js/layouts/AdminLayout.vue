@@ -155,4 +155,21 @@ watch(
         align-items: center;
     }
 }
+
+.v-overlay__content {
+    .v-list {
+        .v-list-item {
+            .v-list-item__content {
+                .v-list-item-title {
+                    font-size: 14px;
+                }
+            }
+            .v-list-item__prepend {
+                i.v-icon.notranslate {
+                    margin-inline-end: 1rem;
+                }
+            }
+        }
+    }
+}
 </style>

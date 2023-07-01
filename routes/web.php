@@ -49,6 +49,14 @@ Route::name('admin.')->prefix('a')->group(function () {
       Route::post('ver/{expediente}', [ExpedienteController::class, 'showEdit'])->name('show');
     });
 
+    Route::name('emitidos.')->prefix('emitidos')->group(function () {
+      Route::get('', [ExpedienteController::class, 'indexEmitidos'])->name('index');
+      // Route::get('crear', [ExpedienteController::class, 'internoCreate'])->name('store');
+      //Route::post('guardar/{expediente?}', [ExpedienteController::class, 'internoStore'])->name('store');
+      // Route::post('editar/{expediente}', [ExpedienteController::class, 'internoEdit'])->name('edit');
+      // Route::post('ver/{expediente}', [ExpedienteController::class, 'showEdit'])->name('show');
+    });
+
 
     Route::get('interno', [ExpedienteController::class, 'internoCreate'])->name('interno.create');
 

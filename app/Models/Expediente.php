@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +29,16 @@ class Expediente extends Model
         'expe_pers_id' => 'integer'
     ];
 
+
+    protected function expeFechaRegistro(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->translatedFormat('d \d\e F \d\e\l Y')
+        );
+    }
+
+
+
     protected $fillable = [
         'expe_codigo',
         'expe_password',
@@ -47,6 +59,15 @@ class Expediente extends Model
         'expe_docu_id',
         'expe_admin_id',
         'expe_pers_id'
+    ];
+
+    public $headers =  [
+        ['text' => "Número", 'value' => "expe_numero", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Periodo", 'value' => "expe_periodo", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Tipo", 'value' => "expe_tipo", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Siglas", 'value' => "expe_sigla", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Asunto", 'value' => "expe_asunto", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Fecha", 'value' => "expe_fecha_registro", 'short' => false, 'order' => 'ASC'],
     ];
 
     public function estado()

@@ -105,6 +105,13 @@ const menuExpedientes = [
         group: null,
     },
     {
+        title: "Mis tramites",
+        value: "emitidos",
+        icon: null,
+        to: "expedientes/emitidos",
+        group: null,
+    },
+    {
         title: "Internos",
         value: "internos",
         icon: null,

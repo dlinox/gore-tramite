@@ -3,8 +3,9 @@
     <v-table class="mt-3 bg-">
         <thead>
             <tr>
+                <th v-if="withAction && actionsStart" class="th-action">Acciones</th>
                 <th
-                    class="text-left th-data-table"
+                    class="text-left th-data-table font-weight-bold"
                     v-for="(item, index) in headers"
                     :key="index"
                     @click="
@@ -31,7 +32,7 @@
                         </v-badge> -->
                     </div>
                 </th>
-                <th v-if="withAction" class="th-action">Acciones</th>
+                <th v-if="(withAction || actionsEnd) && !actionsStart" class="th-action">Acciones</th>
             </tr>
         </thead>
 
@@ -45,18 +46,30 @@
                     >
                         <NoData />
                     </td>
+
+                    
                 </tr>
             </template>
             <template v-else>
-                <tr v-for="item in items.data" :key="item.name">
+                <tr
+                    v-for="item in items.data"
+                    :key="item.name"
+                    style="font-size: 14px"
+                >
+                    <template v-if="withAction && actionsStart">
+                        <td>
+                            <slot name="action" :item="item"> </slot>
+                        </td>
+                    </template>
+
                     <template v-for="(header, j) in headers">
                         <td>
                             <slot :name="'item.' + header.value" :item="item">
-                                 {{ item[header.value] }}
+                                {{ item[header.value] }}
                             </slot>
                         </td>
                     </template>
-                    <template v-if="withAction">
+                    <template v-if="(withAction || actionsEnd) && !actionsStart">
                         <td>
                             <slot name="action" :item="item"> </slot>
                         </td>
@@ -66,7 +79,13 @@
         </tbody>
         <tfoot v-show="items.total > 0">
             <tr>
-                <td :colspan="withAction ? headers.length + 1 : headers.length">
+                <td
+                    :colspan="
+                        withAction || actionsStart || actionsStart
+                            ? headers.length + 1
+                            : headers.length
+                    "
+                >
                     <div class="d-flex justify-space-between align-center pt-3">
                         <div class="">
                             <v-select
@@ -101,6 +120,15 @@ const props = defineProps({
     items: Object,
     url: String,
     withAction: {
+        type: Boolean,
+        default: false,
+    },
+
+    actionsStart: {
+        type: Boolean,
+        default: false,
+    },
+    actionsEnd: {
         type: Boolean,
         default: false,
     },

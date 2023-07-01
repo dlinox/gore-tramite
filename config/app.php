@@ -15,13 +15,13 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Lima',
 
-    'locale' => 'en',
+    'locale' => 'es',
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'es',
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'es_PE',
 
     'key' => env('APP_KEY'),
 
@@ -37,7 +37,7 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
-
+ 
         /*
          * Application Service Providers...
          */

@@ -16,14 +16,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Output\ConsoleOutput;
+
 
 class ExpedienteController extends Controller
 {
     protected $expediente;
+    protected $admin;
     public function __construct()
     {
         $this->expediente = new Expediente();
+
+        $this->middleware(function ($request, $next) {
+
+
+            $this->admin =  Auth::guard('admin')->user();
+            return $next($request);
+        });
     }
 
     public function index(Request $request)
@@ -33,10 +41,12 @@ class ExpedienteController extends Controller
 
         if ($request->has('search')) {
             $searchTerm = $request->search;
-            $query->where('acci_nombre', 'like', '%' . $searchTerm . '%');
+            $query->where('expe_codigo', 'like', '%' . $searchTerm . '%');
         }
 
-        $items = $query->paginate($perPage)->appends($request->query());
+        $items = $query->join('tramites', 'tram_expe_id', 'expe_id')
+            ->where('tram_admin_fin', $this->admin->id)
+            ->paginate($perPage)->appends($request->query());
 
         return Inertia::render('Admin/Expediente/index', [
             'items' => $items,
@@ -44,28 +54,6 @@ class ExpedienteController extends Controller
             'filters' => [
                 'search' => $request->search,
             ],
-        ]);
-    }
-
-
-    /**
-     * *ESPEDIENTES INTERNOS (JEFATURA).
-     */
-
-    public function interno()
-    {
-        return Inertia::render('Admin/Expediente/Interno/index');
-    }
-
-    public function internoCreate()
-    {
-        return Inertia::render('Admin/Expediente/Interno/create', [
-            'procesos' => Proceso::all(),
-            'documentos' => Documento::all(),
-            'oficinas' => Oficina::all(),
-            'siglas' => 'asd',
-            'periodo' => '2023',
-            'tipo' => 'interno',
         ]);
     }
 
@@ -81,7 +69,6 @@ class ExpedienteController extends Controller
         ]);
     }
 
-
     public function store(ExpedienteRequest $request)
     {
         $data = $request->all();
@@ -92,7 +79,7 @@ class ExpedienteController extends Controller
             $this->storeTramite($destino, $expediente);
         }
 
-        $expeCodigo = '001-' .  $expediente->expe_periodo .  str_pad($expediente->expe_id, 7, "0", STR_PAD_LEFT) . '-' . substr($expediente->expe_tipo, 0, 1);
+        $expeCodigo = '001-' .  $expediente->expe_periodo .  str_pad($expediente->expe_id, 7, "0", STR_PAD_LEFT) . substr($expediente->expe_tipo, 0, 1);
         $expediente->expe_codigo =  $expeCodigo;
         $expediente->save();
 
@@ -122,18 +109,30 @@ class ExpedienteController extends Controller
         }
     }
 
-
-    public function externo()
+    // *MIS TRAMITES
+    public function indexEmitidos(Request $request)
     {
-        return Inertia::render('Admin/Expediente/Externo/index');
+
+        $perPage = $request->input('perPage', 10);
+        $query = Expediente::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where('expe_codigo', 'like', '%' . $searchTerm . '%');
+        }
+
+        $items = $query->where('expe_admin_id', $this->admin->id)->paginate($perPage)->appends($request->query());
+
+        return Inertia::render('Admin/Expediente/emitidos', [
+            'items' => $items,
+            'headers' => $this->expediente->headers,
+            'filters' => [
+                'search' => $request->search,
+            ],
+        ]);
     }
 
-    function getNextNumDocumento(Request $request)
-    {
-        $nextNum =  $this->expediente->getNextNumDoc($request->docu, $request->tipo, $request->sigla);
-
-        return response()->json($nextNum);
-    }
+    // *FUNCIONES
     public function getAdminsByOfic($oficina)
     {
 
@@ -142,6 +141,12 @@ class ExpedienteController extends Controller
         return response()->json($admin);
     }
 
+    function getNextNumDocumento(Request $request)
+    {
+        $nextNum =  $this->expediente->getNextNumDoc($request->docu, $request->tipo, $request->sigla);
+
+        return response()->json($nextNum);
+    }
 
     function storeExpedienteArchivo($tipo, $expediente, $archivo)
     {
@@ -172,8 +177,6 @@ class ExpedienteController extends Controller
             $indexAnexo++;
         }
     }
-
-
 
     function saveFile($file, $name)
     {
