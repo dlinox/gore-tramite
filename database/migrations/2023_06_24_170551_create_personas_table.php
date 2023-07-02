@@ -20,11 +20,11 @@ return new class extends Migration
             $table->char('pers_dni', 8)->unique();
             $table->char('pers_ruc', 11)->unique()->nullable();
             //$table->char('pers_ce', 12)->unique();
-            $table->string('pers_ugigeo')->nullable();
-            $table->string('pers_direccion')->nullable();
-            $table->char('pers_celular')->nullable()->unique();
-            $table->string('pers_correo')->nullable()->unique();
-            $table->string('pers_pais')->default('Perú');
+            $table->char('pers_ugigeo', 6)->nullable();
+            $table->string('pers_direccion', 150)->nullable();
+            $table->char('pers_celular', 9)->nullable()->unique();
+            $table->string('pers_correo', 120)->nullable()->unique();
+            $table->string('pers_pais', 20)->default('Perú');
             $table->boolean('pers_estado')->default(1);
             $table->timestamps();
         });

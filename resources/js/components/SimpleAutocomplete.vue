@@ -14,9 +14,7 @@
         "
     >
         <template v-if="itemCustom" v-slot:item="{ props, item }">
-            <slot name="custom" :props="props" :item="item">
-            </slot>
-
+            <slot name="custom" :props="props" :item="item"> </slot>
         </template>
     </v-autocomplete>
 </template>
@@ -31,7 +29,7 @@ const props = defineProps({
     itemTitle: String,
     itemValue: String,
     label: String,
-    modelValue: [Number, Array],
+    modelValue: [Number, Array, Object],
     itemCustom: Boolean,
 });
 
@@ -59,7 +57,7 @@ watch(
 
         loading.value = true;
         let res = await axios.get(props.url, { params: { search: val } });
-        console.log("data", res.data);
+       
         items.value = res.data;
 
         loading.value = false;

@@ -24,7 +24,7 @@ class ExpedienteRequest extends FormRequest
 
             'expe_archivo' => 'required|array',
             'expe_archivo.*' => 'file|mimes:pdf|max:2048',
-            'expe_anexos' => 'required|array',
+            'expe_anexos' => 'nullable|array',
             'expe_anexos.*' => 'file|mimes:pdf|max:2048',
 
             'expe_codigo' => 'nullable|unique:expedientes,expe_codigo',
@@ -55,7 +55,7 @@ class ExpedienteRequest extends FormRequest
             'expe_proc_id' => 'required|exists:procesos,proc_id',
             'expe_docu_id' => 'required|exists:documentos,docu_id',
             'expe_admin_id' => 'nullable|exists:admins,id',
-            'expe_pers_id' => 'nullable|exists:personas,pers_id',
+            'expe_pers_id' => 'required|exists:personas,pers_id',
         ];
     }
 
@@ -96,7 +96,7 @@ class ExpedienteRequest extends FormRequest
             'expe_docu_id.required' => 'El campo ID de documento es obligatorio.',
             'expe_docu_id.exists' => 'El ID de documento especificado no existe.',
             'expe_admin_id.exists' => 'El ID de administrador especificado no existe.',
-            'expe_pers_id.required' => 'El campo ID de persona es obligatorio.',
+            'expe_pers_id.required' => 'El remitente es obligatorio.',
             'expe_pers_id.exists' => 'El ID de persona especificado no existe.',
 
 

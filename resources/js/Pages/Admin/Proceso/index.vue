@@ -68,8 +68,8 @@
                                 <template v-slot:content="{ dialog }">
                                     <Formulario
                                         @on-cancel="dialog"
-                                        :form-data="item"
                                         :formStructure="formStructure"
+                                        :form-data="item"
                                         :edit="true"
                                         :url="url + '/' + item[`${primaryKey}`]"
                                     />

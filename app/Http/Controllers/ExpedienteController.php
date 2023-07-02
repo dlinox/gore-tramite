@@ -17,7 +17,6 @@ use App\Models\Tramite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -55,6 +54,19 @@ class ExpedienteController extends Controller
 
     public function create(String $tipo)
     {
+        if ($tipo === 'EXTERNO' || $tipo === 'externo') {
+
+            return Inertia::render('Admin/Expediente/create', [
+                'procesos' => Proceso::all(),
+                'documentos' => Documento::all(),
+                'oficinas' => Oficina::all(),
+                'siglas' => '',
+                'periodo' => '2023',
+                'tipo' => $tipo,
+                'externo' => true,
+            ]);
+        }
+
         return Inertia::render('Admin/Expediente/create', [
             'procesos' => Proceso::all(),
             'documentos' => Documento::all(),
@@ -62,6 +74,7 @@ class ExpedienteController extends Controller
             'siglas' => $this->expediente->getSiglas($tipo),
             'periodo' => '2023',
             'tipo' => $tipo,
+            'externo' => false,
         ]);
     }
 
@@ -71,7 +84,7 @@ class ExpedienteController extends Controller
         $data['expe_password'] =  Str::random(10);
 
         $expediente = Expediente::create($data);
-        
+
         foreach ($data['destinatarios'] as $destino) {
             $this->storeTramite($destino, $expediente);
         }
@@ -199,6 +212,8 @@ class ExpedienteController extends Controller
         return redirect()->back()->with('success', 'Operacion Exitosa.');
     }
 
+
+
     // *MIS TRAMITES
     public function indexEmitidos(Request $request)
     {
@@ -253,7 +268,7 @@ class ExpedienteController extends Controller
     function saveFilesExpediente($request, $expediente)
     {
         $expeArchivos = $request['expe_archivo'];
-        $expeAnexos = $request['expe_anexos'];
+        $expeAnexos = $request['expe_anexos'] ?? [];
 
         foreach ($expeArchivos as $expeArchivo) {
             $archivo = $this->saveFile($expeArchivo, $expediente->expe_codigo);

@@ -7,13 +7,13 @@ use App\Http\Controllers\Admin\Auth\AuthController as AdminAuthController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\OficinaController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProcesoRequisitoController;
 use App\Http\Controllers\Usuario\Auth\AuthController;
 use Inertia\Inertia;
 
 Route::get('/', [Controller::class,  'landingPage'])->name('landing');
-
 
 Route::name('admin.')->prefix('a')->group(function () {
 
@@ -25,12 +25,15 @@ Route::name('admin.')->prefix('a')->group(function () {
     return Inertia::render('Admin/index');
   })->name('index'); //dashboard usuario
 
+  Route::resource('personas', PersonaController::class);
+  
   Route::resource('oficinas', OficinaController::class);
   Route::resource('acciones', AccionController::class);
 
   Route::resource('documentos', DocumentoController::class);
   Route::resource('procesos', ProcesoController::class);
   Route::resource('proceso-requisitos', ProcesoRequisitoController::class);
+
 
 
   Route::middleware('auth:admin')->name('expedientes.')->prefix('expedientes')->group(function () {
@@ -86,4 +89,9 @@ Route::name('users.')->prefix('')->group(function () {
   Route::middleware('auth')->get('virtual',  function () {
     return Inertia::render('Usuario/index');
   })->name('index'); //dashboard usuario
+});
+
+
+Route::name('autocomplete.')->prefix('autocomplete')->group(function () {
+  Route::get('personas', [PersonaController::class, 'autocomplete'])->name('personas');
 });

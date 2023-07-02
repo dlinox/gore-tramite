@@ -2,16 +2,11 @@
     <div class="wrapper-login">
         <v-card class="mx-auto my-auto" max-width="400">
             <v-card-title class="pa-5">
-                
-                <Logo  class="mx-auto"></Logo>
+                <Logo class="mx-auto"></Logo>
             </v-card-title>
             <v-divider></v-divider>
             <v-card-item>
                 <v-form>
-                    <pre>
-      {{ form.errors.message }}
-    </pre
-                    >
                     <v-form ref="formRef" @submit.prevent="submit">
                         <v-row no-gutters>
                             <v-col cols="12" class="my-2">
@@ -54,8 +49,8 @@ import Logo from "@/components/Logo.vue";
 import { useForm } from "@inertiajs/vue3";
 
 const form = useForm({
-    document: "52662937",
-    password: "passsword",
+    document: "71822345",
+    password: "password",
 });
 
 const submit = async () => {

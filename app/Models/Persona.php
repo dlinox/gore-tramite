@@ -16,7 +16,8 @@ class Persona extends Model
         'pers_paterno',
         'pers_materno',
         'pers_fecha_nacimiento',
-        'pers_nro_documento',
+        'pers_dni',
+        'pers_ruc',
         'pers_tipo_documento',
         'pers_ugigeo',
         'pers_direccion',
@@ -30,5 +31,4 @@ class Persona extends Model
         'pers_fecha_nacimiento' => 'date',
         'pers_estado' => 'boolean',
     ];
-    
 }
