@@ -14,6 +14,8 @@ return new class extends Migration
             $table->string('exar_url', 120)->nullable();
             $table->unsignedBigInteger('exar_expe_id');
             $table->unsignedBigInteger('exar_arch_id');
+            $table->unsignedBigInteger('exar_tram_id')->nullable();
+
             $table->timestamps();
             $table->foreign('exar_expe_id')->references('expe_id')->on('expedientes');
             $table->foreign('exar_arch_id')->references('arch_id')->on('archivos');

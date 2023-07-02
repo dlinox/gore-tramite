@@ -1,10 +1,6 @@
 <template>
     <AdminLayout>
-        <HeadingPage
-            title="Expedientes de Jefatura"
-            subtitle="Nuevo expedietn jefatura"
-        >
-
+        <HeadingPage title="Expedientes de Jefatura" subtitle="Nuevo expedietn jefatura">
         </HeadingPage>
         <v-container fluid>
             <v-form ref="formRef" @submit.prevent="submit">
@@ -50,121 +46,59 @@
                         <CardToolbar title="Resumen">
                             <v-row class="py-3">
                                 <v-col cols="5">
-                                    <v-select
-                                        v-model="form.expe_proc_id"
-                                        @update:model-value="changeProceso"
-                                        :items="procesos"
-                                        label="Tramite (Proceso)"
-                                        item-title="proc_nombre"
-                                        item-value="proc_id"
-                                        :error-messages="
-                                            form.errors.expe_proc_id
-                                        "
-                                        @update:modelValue="getNumeroDocumento"
-                                    />
+                                    <v-select v-model="form.expe_proc_id" @update:model-value="changeProceso"
+                                        :items="procesos" label="Tramite (Proceso)" item-title="proc_nombre"
+                                        item-value="proc_id" :error-messages="form.errors.expe_proc_id
+                                            " @update:modelValue="getNumeroDocumento" />
                                 </v-col>
 
                                 <v-col cols="5">
-                                    <v-select
-                                        v-model="form.expe_docu_id"
-                                        :items="documentos"
-                                        label="Tipo de documento"
-                                        item-title="docu_nombre"
-                                        item-value="docu_id"
-                                        :error-messages="
-                                            form.errors.expe_docu_id
-                                        "
-                                        @update:modelValue="getNumeroDocumento"
-                                    />
+                                    <v-select v-model="form.expe_docu_id" :items="documentos" label="Tipo de documento"
+                                        item-title="docu_nombre" item-value="docu_id" :error-messages="form.errors.expe_docu_id
+                                            " @update:modelValue="getNumeroDocumento" />
                                 </v-col>
 
                                 <v-col cols="2">
-                                    <v-text-field
-                                        v-model="form.expe_numero"
-                                        label="Número"
-                                        :error-messages="
-                                            form.errors.expe_numero
-                                        "
-                                    />
+                                    <v-text-field v-model="form.expe_numero" label="Número" :error-messages="form.errors.expe_numero
+                                        " />
                                 </v-col>
 
                                 <v-col cols="2">
-                                    <v-text-field
-                                        v-model="form.expe_folios"
-                                        label="Folios"
-                                        :error-messages="
-                                            form.errors.expe_folios
-                                        "
-                                    />
+                                    <v-text-field v-model="form.expe_folios" label="Folios" :error-messages="form.errors.expe_folios
+                                        " />
                                 </v-col>
 
                                 <v-col cols="3">
-                                    <v-text-field
-                                        v-model="form.expe_periodo"
-                                        label="Periodo"
-                                        :error-messages="
-                                            form.errors.expe_periodo
-                                        "
-                                    />
+                                    <v-text-field v-model="form.expe_periodo" label="Periodo" :error-messages="form.errors.expe_periodo
+                                        " />
                                 </v-col>
 
                                 <v-col cols="3">
-                                    <v-text-field
-                                        v-model="form.expe_sigla"
-                                        label="Sigla"
-                                        :error-messages="form.errors.expe_sigla"
-                                    />
+                                    <v-text-field v-model="form.expe_sigla" label="Sigla"
+                                        :error-messages="form.errors.expe_sigla" />
                                 </v-col>
 
                                 <v-col cols="4">
-                                    <v-text-field
-                                        type="date"
-                                        v-model="form.expe_fecha_registro"
-                                        label="Fecha de registro"
-                                        :error-messages="
-                                            form.errors.expe_fecha_registro
-                                        "
-                                    />
+                                    <v-text-field type="date" v-model="form.expe_fecha_registro" label="Fecha de registro"
+                                        :error-messages="form.errors.expe_fecha_registro
+                                            " />
                                 </v-col>
 
                                 <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.expe_asunto"
-                                        label="Asunto"
-                                        :error-messages="
-                                            form.errors.expe_asunto
-                                        "
-                                    />
+                                    <v-text-field v-model="form.expe_asunto" label="Asunto" :error-messages="form.errors.expe_asunto
+                                        " />
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-textarea
-                                        v-model="form.expe_resumen"
-                                        label="Resumen"
-                                        rows="2"
-                                        :error-messages="
-                                            form.errors.expe_resumen
-                                        "
-                                    />
+                                    <v-textarea v-model="form.expe_resumen" label="Resumen" rows="2" :error-messages="form.errors.expe_resumen
+                                        " />
                                 </v-col>
                             </v-row>
                         </CardToolbar>
 
-                        <CardToolbar
-                            title="Destinatario"
-                            :loading="loadingSelectOficina"
-                        >
-                            <v-select
-                                class="mt-3"
-                                v-model="selectOficina"
-                                @update:model-value="selectedOficina"
-                                :items="oficinas"
-                                label="Seleccione una oficina"
-                                item-title="ofic_nombre"
-                                item-value="ofic_id"
-                                return-object
-                                :error-messages="form.errors.destinatarios"
-                            />
-
+                        <CardToolbar title="Destinatario" :loading="loadingSelectOficina">
+                            <v-select class="mt-3" v-model="selectOficina" @update:model-value="selectedOficina"
+                                :items="oficinas" label="Seleccione una oficina" item-title="ofic_nombre"
+                                item-value="ofic_id" return-object :error-messages="form.errors.destinatarios" />
 
                             <v-table>
                                 <thead>
@@ -188,51 +122,32 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr
-                                        v-for="(
+                                    <tr v-for="(
                                             item, index
-                                        ) in form.destinatarios"
-                                        :key="index"
-                                    >
+                                        ) in form.destinatarios" :key="index">
                                         <td>
                                             <small>
                                                 {{ item.ofic_nombre }}
                                             </small>
                                         </td>
                                         <td>
-                                            <v-select
-                                                density="compact"
-                                                clearable
-                                                v-model="item.para"
-                                                :items="item.personal"
-                                                multiple
-                                                chips
-                                                label="Para"
-                                                item-title="name"
-                                                item-value="id"
-                                                :error-messages="
-                                                    form.errors[
-                                                        `destinatarios.${index}.para`
+                                            <v-select density="compact" clearable v-model="item.para" :items="item.personal"
+                                                multiple chips label="Para" item-title="name" item-value="id"
+                                                :error-messages="form.errors[
+                                                    `destinatarios.${index}.para`
                                                     ]
-                                                "
-                                            >
+                                                    ">
                                             </v-select>
                                         </td>
                                         <td class="text-left">
-                                            <v-btn
-                                                prepend-icon="mdi-delete-outline"
-                                                text="quitar"
-                                                variant="tonal"
-                                                color="red"
-                                                @click="
-                                                    () => {
+                                            <v-btn prepend-icon="mdi-delete-outline" text="quitar" variant="tonal"
+                                                color="red" @click="() => {
                                                         form.destinatarios.splice(
                                                             index,
                                                             1
                                                         );
                                                     }
-                                                "
-                                            />
+                                                    " />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -247,42 +162,21 @@
                                 </v-list-item-title>
 
                                 <v-list-item-subtitle>
-                                    <v-checkbox
-                                        v-model="firmaDigital"
-                                        label="Firma Digital"
-                                    ></v-checkbox>
+                                    <v-checkbox v-model="firmaDigital" label="Firma Digital"></v-checkbox>
                                     <template v-if="!firmaDigital">
-                                        <v-file-input
-                                            @change="handleFileChangeDoc"
-                                            v-model="form.expe_archivo"
-                                            show-size
-                                            single
-                                            :clearable="false"
-                                            label="Seleccione el documento"
-                                            accept="application/pdf"
-                                            :error-messages="
-                                                form.errors.expe_archivo
-                                            "
-                                        ></v-file-input>
+                                        <v-file-input @change="handleFileChangeDoc" v-model="form.expe_archivo" show-size
+                                            single :clearable="false" label="Seleccione el documento"
+                                            accept="application/pdf" :error-messages="form.errors.expe_archivo
+                                                "></v-file-input>
                                     </template>
                                 </v-list-item-subtitle>
                             </v-list-item>
 
                             <v-card variant="tonal">
-                                <v-list-item
-                                    v-for="(file, fileIndex) in fileListDocs"
-                                    :key="file.name"
-                                >
+                                <v-list-item v-for="(file, fileIndex) in fileListDocs" :key="file.name">
                                     <template v-slot:prepend>
-                                        <a
-                                            :href="file.url"
-                                            target="_blank"
-                                            class="me-3"
-                                        >
-                                            <v-icon
-                                                color="red"
-                                                icon="mdi-file-pdf-box"
-                                            >
+                                        <a :href="file.url" target="_blank" class="me-3">
+                                            <v-icon color="red" icon="mdi-file-pdf-box">
                                             </v-icon>
                                         </a>
                                     </template>
@@ -305,13 +199,8 @@
                                     </v-list-item-subtitle>
 
                                     <template v-slot:append>
-                                        <v-btn
-                                            icon="mdi-delete"
-                                            density="compact"
-                                            color="dark"
-                                            variant="tonal"
-                                            @click="deleteFileDoc(index)"
-                                        >
+                                        <v-btn icon="mdi-delete" density="compact" color="dark" variant="tonal"
+                                            @click="deleteFileDoc(index)">
                                         </v-btn>
                                     </template>
                                 </v-list-item>
@@ -321,30 +210,16 @@
                                 <v-list-item-title> Anexos </v-list-item-title>
 
                                 <v-list-item-subtitle>
-                                    <v-checkbox
-                                        v-model="anexos"
-                                        label="Anexos"
-                                    ></v-checkbox>
+                                    <v-checkbox v-model="anexos" label="Anexos"></v-checkbox>
 
                                     <template v-if="anexos">
                                         <v-card>
                                             <v-card-item class="">
-                                                <v-file-input
-                                                    v-model="form.expe_anexos"
-                                                    class="my-2"
-                                                    show-size
-                                                    counter
-                                                    multiple
-                                                    :clearable="false"
-                                                    label="Seleccione el documento"
-                                                    accept="application/pdf"
-                                                    :error-messages="
-                                                        form.errors.expe_anexos
-                                                    "
-                                                    @change="
-                                                        handleFileChangeAnex
-                                                    "
-                                                ></v-file-input>
+                                                <v-file-input v-model="form.expe_anexos" class="my-2" show-size counter
+                                                    multiple :clearable="false" label="Seleccione el documento"
+                                                    accept="application/pdf" :error-messages="form.errors.expe_anexos
+                                                        " @change="handleFileChangeAnex
+        "></v-file-input>
                                             </v-card-item>
                                         </v-card>
                                     </template>
@@ -352,15 +227,9 @@
                             </v-list-item>
 
                             <v-card variant="tonal">
-                                <v-list-item
-                                    v-for="(file, fileIndex) in fileListAnex"
-                                    :key="file.name"
-                                >
+                                <v-list-item v-for="(file, fileIndex) in fileListAnex" :key="file.name">
                                     <template v-slot:prepend>
-                                        <v-icon
-                                            color="red"
-                                            icon="mdi-file-pdf-box"
-                                        ></v-icon>
+                                        <v-icon color="red" icon="mdi-file-pdf-box"></v-icon>
                                     </template>
                                     <v-list-item-title>{{
                                         file.name
@@ -379,13 +248,8 @@
                                     </v-list-item-subtitle>
 
                                     <template v-slot:append>
-                                        <v-btn
-                                            icon="mdi-delete"
-                                            density="compact"
-                                            color="dark"
-                                            variant="tonal"
-                                            @click="deleteFileAnex(index)"
-                                        >
+                                        <v-btn icon="mdi-delete" density="compact" color="dark" variant="tonal"
+                                            @click="deleteFileAnex(index)">
                                         </v-btn>
                                     </template>
                                 </v-list-item>
@@ -476,7 +340,7 @@ const selectedOficina = async (newVal) => {
     form.destinatarios.push({
         ...newVal,
         personal: res.data,
-        para: [responsable?.id] ? [responsable?.id] : null,
+        para: responsable?.id ? [responsable?.id] : null,
     });
 
     loadingSelectOficina.value = false;

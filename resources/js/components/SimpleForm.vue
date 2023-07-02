@@ -127,8 +127,6 @@ const form = computed({
 const submit = async () => {
     const { valid } = await _ref[`formRef-${props.formId}`].value.validate();
     if (!valid) return;
-
-    console.log('pasmoa por qui');
     emit("onSumbit");
 };
 </script>

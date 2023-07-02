@@ -4,21 +4,13 @@
             <template #actions>
                 <v-menu location="start">
                     <template v-slot:activator="{ props }">
-                        <v-btn
-                            v-bind="props"
-                            prepend-icon="mdi-plus"
-                            variant="flat"
-                        >
+                        <v-btn v-bind="props" prepend-icon="mdi-plus" variant="flat">
                             Nuevo
                         </v-btn>
                     </template>
                     <v-list density="compact">
-                        <v-list-item
-                            v-for="(item, index) in menuNuevo"
-                            :key="index"
-                            :value="index"
-                            @click="router.get(item.route)"
-                        >
+                        <v-list-item v-for="(item, index) in menuNuevo" :key="index" :value="index"
+                            @click="router.get(item.route)">
                             <template v-slot:prepend>
                                 <v-icon :icon="item.icon"> </v-icon>
                             </template>
@@ -34,74 +26,76 @@
         <v-container fluid>
             <v-card>
                 <v-card-item>
-                    <DataTable
-                        :headers="headers"
-                        :items="items"
-                        with-action
-                        actions-start
-                        :url="url"
-                    >
+                    <DataTable :headers="headers" :items="items" with-action actions-start :url="url">
+                        <template v-slot:header="{ filter }">
+                            <v-row class="py-3" justify="end">
+                                <v-col cols="6">
+                                    <v-text-field v-model="filter.search" label="Buscar" />
+                                </v-col>
+                            </v-row>
+                        </template>
+
                         <template v-slot:action="{ item }">
                             <div class="d-flex">
-                                <v-menu
-                                    location="end"
-                                    :open-on-hover="!mobile"
-                                >
-                                    <template v-slot:activator="{ props }">
-                                        <v-btn
-                                            v-bind="props"
-                                            prepend-icon="mdi-plus"
-                                            variant="tonal"
-                                            density="compact"
-                                            icon="mdi-dots-vertical"
-                                            
-                                        >
-                                        </v-btn>
-                                    </template>
-                                    <v-list density="compact" rounded="0">
-                                        <v-list-item
-                                            v-for="(item, index) in menuNuevo"
-                                            :key="index"
-                                            :value="index"
-                                            @click="router.get(item.route)"
-                                        >
-                                            <template v-slot:prepend>
-                                                <v-icon :icon="item.icon">
-                                                </v-icon>
-                                            </template>
+                                <template v-if="item.tram_esta_id === 5">
+                                    <v-btn class="text-caption" density="comfortable" variant="tonal"
+                                        color="indigo-accent-4">
+                                        <DialogConfirm title="RECIBIR EXPEDIENTE" text="¿Seguro de recibir este expediente?"
+                                            @onConfirm="() =>
+                                                    router.post(
+                                                        url + '/recibir',
 
-                                            <v-list-item-title>{{
-                                                item.title
-                                            }}</v-list-item-title>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-menu>
+                                                        {
+                                                            tramite:
+                                                                item.tram_id,
+                                                        }
+                                                    )
+                                                " />
 
-                                <v-btn
-                                    class="text-caption"
-                                    density="comfortable"
-                                    variant="tonal"
-                                    color="light-blue-darken-4"
-                                >
-                                    <v-icon start color=""
-                                        >mdi-card-search-outline</v-icon
-                                    >
+                                        <v-icon start color="">
+                                            mdi-send-check-outline
+                                        </v-icon>
+                                        Recibir
+                                    </v-btn>
+                                </template>
+                                <template v-else>
+                                    <v-btn class="text-caption" density="comfortable" variant="tonal" color="teal-darken-1"
+                                        @click="() =>
+                                                router.get(url + '/' + item.tram_id + '/revisar')
+                                            ">
+                                        <v-icon start color="">
+                                            mdi-send-check-outline
+                                        </v-icon>
+                                        Ver
+                                    </v-btn>
+                                </template>
+
+                                <v-btn class="text-caption" density="comfortable" variant="tonal"
+                                    color="blue-grey-darken-2">
+                                    <v-icon start color="">mdi-card-search-outline</v-icon>
                                     {{ item.expe_codigo }}
                                 </v-btn>
                             </div>
                         </template>
 
-                        <template v-slot:header="{ filter }">
-                            <v-row class="py-3" justify="end">
-                                <v-col cols="6">
-                                    <v-text-field
-                                        v-model="filter.search"
-                                        label="Buscar"
-                                    />
-                                </v-col>
-                            </v-row>
+                        <template v-slot:item.expe_proc_id="{ item }">
+                            {{ item.proceso.proc_nombre }}
                         </template>
 
+                        <template v-slot:item.tram_esta_nombre="{ item }">
+                            <v-chip label color="black">
+                                <small>
+                                    {{ item.tram_esta_nombre }}
+                                </small>
+                            </v-chip>
+                        </template>
+
+                        <template v-slot:item.expe_pers_id="{ item }">
+                            <v-list-item
+                                :title="`${item.persona.pers_nombre} ${item.persona.pers_paterno} ${item.persona.pers_materno}`"
+                                :subtitle="item.persona.pers_dni">
+                            </v-list-item>
+                        </template>
                     </DataTable>
                 </v-card-item>
             </v-card>
@@ -127,7 +121,7 @@ const props = defineProps({
 });
 
 const url = "/a/expedientes";
-const primaryKey = "ofic_id";
+const primaryKey = "expe_id";
 
 const menuNuevo = [
     {
@@ -147,4 +141,6 @@ const menuNuevo = [
         icon: "mdi-account-group-outline",
     },
 ];
+
+const recibirTramte = (item) => { };
 </script>

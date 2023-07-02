@@ -37,6 +37,15 @@ Route::name('admin.')->prefix('a')->group(function () {
     Route::get('', [ExpedienteController::class, 'index'])->name('index');
     Route::get('{tipo}/crear', [ExpedienteController::class, 'create'])->name('create');
 
+    Route::get('/{tramite}/revisar', [ExpedienteController::class, 'show'])->name('show');
+
+
+    Route::post('recibir', [ExpedienteController::class, 'recibir'])->name('recibir');
+    Route::post('observar', [ExpedienteController::class, 'observar'])->name('observar');
+    Route::post('archivar', [ExpedienteController::class, 'archivar'])->name('archivar');
+    Route::post('finalizar', [ExpedienteController::class, 'finalizar'])->name('finalizar');
+    Route::post('derivar', [ExpedienteController::class, 'derivar'])->name('derivar');
+
 
     Route::post('', [ExpedienteController::class, 'store'])->name('store');
 

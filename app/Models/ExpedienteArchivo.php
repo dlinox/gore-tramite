@@ -15,7 +15,14 @@ class ExpedienteArchivo extends Model
         'exar_url',
         'exar_expe_id',
         'exar_arch_id',
+        'exar_tram_id',
     ];
+
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+    ];
+
 
     public function expediente()
     {

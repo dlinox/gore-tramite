@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DerivarRequest;
 use App\Http\Requests\ExpedienteRequest;
+use App\Http\Requests\FinalizarRequest;
+use App\Models\Accion;
 use App\Models\Admin;
 use App\Models\Archivo;
 use App\Models\Documento;
@@ -14,6 +17,7 @@ use App\Models\Tramite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -27,8 +31,6 @@ class ExpedienteController extends Controller
         $this->expediente = new Expediente();
 
         $this->middleware(function ($request, $next) {
-
-
             $this->admin =  Auth::guard('admin')->user();
             return $next($request);
         });
@@ -36,25 +38,19 @@ class ExpedienteController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-        $query = Expediente::query();
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/index', $data);
+    }
 
-        if ($request->has('search')) {
-            $searchTerm = $request->search;
-            $query->where('expe_codigo', 'like', '%' . $searchTerm . '%');
-        }
 
-        $items = $query->join('tramites', 'tram_expe_id', 'expe_id')
-            ->where('tram_admin_fin', $this->admin->id)
-            ->paginate($perPage)->appends($request->query());
+    public function show($tramite)
+    {
 
-        return Inertia::render('Admin/Expediente/index', [
-            'items' => $items,
-            'headers' => $this->expediente->headers,
-            'filters' => [
-                'search' => $request->search,
-            ],
-        ]);
+        $tramite = Expediente::getTramite($tramite);
+        return Inertia::render(
+            'Admin/Expediente/show',
+            ['tramite' => $tramite, 'oficinas' => Oficina::all(), 'acciones' => Accion::all()]
+        );
     }
 
     public function create(String $tipo)
@@ -75,6 +71,7 @@ class ExpedienteController extends Controller
         $data['expe_password'] =  Str::random(10);
 
         $expediente = Expediente::create($data);
+        
         foreach ($data['destinatarios'] as $destino) {
             $this->storeTramite($destino, $expediente);
         }
@@ -93,7 +90,7 @@ class ExpedienteController extends Controller
 
         foreach ($destino['para'] as $para) {
             $tramite = [
-                'tram_esta_id' => 6, //pendiente,
+                'tram_esta_id' => 5, //pendiente,
                 'tram_fecha_registro' => date('Y-m-d H:i:s'),
                 'tram_fecha_tramitado' => date('Y-m-d H:i:s'),
                 'tram_periodo'  => $expediente->expe_periodo,
@@ -107,6 +104,99 @@ class ExpedienteController extends Controller
             ];
             Tramite::create($tramite);
         }
+    }
+
+    public function recibir(Request $request)
+    {
+        $tramite = Tramite::find($request->tramite);
+        $tramite->tram_esta_id = 6; //recibido
+        $tramite->tram_fecha_recibido = date('Y-m-d H:i:s');
+
+        $tramite->save();
+
+        return redirect()->back()->with('success', 'Operacion Exitosa.');
+    }
+
+    public function observar(Request $request)
+    {
+
+        $tramite = Tramite::find($request->tramite);
+        $tramite->tram_esta_id = 10; //observado
+        $tramite->tram_observacion = $request->observacion;
+        $tramite->tram_notificar = $request->notificar;
+        $tramite->save();
+
+        $expediente = Expediente::find($tramite->tram_expe_id);
+        $expediente->expe_esta_id = 3; //observado
+        $expediente->expe_observacion = $request->observacion;
+        $expediente->save();
+
+        return redirect()->back()->with('success', 'Operacion Exitosa.');
+    }
+
+    public function archivar(Request $request)
+    {
+
+        $tramite = Tramite::find($request->tramite);
+        $tramite->tram_esta_id = 9; //archivado
+        $tramite->tram_observacion = $request->observacion;
+        $tramite->tram_notificar = $request->notificar;
+        $tramite->save();
+
+        return redirect()->back()->with('success', 'Operacion Exitosa.');
+    }
+
+    public function finalizar(FinalizarRequest $request)
+    {
+
+        if ($request->hasFile('archivo')) {
+            $indexArchivo = 1;
+            foreach ($request->archivo as $expeArchivo) {
+                $archivo = $this->saveFile($expeArchivo, 'R' . $indexArchivo . '-' . $request->codigo);
+                $this->storeExpedienteArchivo('RESPUESTA', $request->expediente, $archivo, $request->tramite);
+                $indexArchivo++;
+            }
+        }
+
+        $tramite = Tramite::find($request->tramite);
+        $tramite->tram_esta_id = 8; //finalizado
+        $tramite->tram_observacion = $request->observacion;
+        $tramite->tram_notificar = $request->notificar;
+        $tramite->save();
+
+        $expediente = Expediente::find($tramite->tram_expe_id);
+        $expediente->expe_esta_id = 4; //finalizado
+        $expediente->save();
+
+        return redirect()->back()->with('success', 'Operacion Exitosa.');
+    }
+
+    public function derivar(DerivarRequest $request)
+    {
+
+        $expediente = Expediente::find($request->expediente);
+
+        foreach ($request['destinatarios'] as $destino) {
+            $destino['tram_acci_id'] = $request->accion;
+            $destino['tram_observacion'] = $request->observacion;
+            $this->storeTramite($destino, $expediente);
+        }
+
+        $tramite = Tramite::find($request->tramite);
+        $tramite->tram_esta_id = 7; //finalizado
+        $tramite->tram_notificar = $request->notificar;
+        $tramite->save();
+
+        if ($request->hasFile('archivo')) {
+            $indexArchivo = 1;
+            foreach ($request->archivo as $expeArchivo) {
+                $archivo = $this->saveFile($expeArchivo, 'AD' . $indexArchivo . '-' . $request->codigo);
+                $this->storeExpedienteArchivo('ADJUNTO', $request->expediente, $archivo, $request->tramite);
+                $indexArchivo++;
+            }
+        }
+
+        return redirect()->back()->with('success', 'Operacion Exitosa.');
     }
 
     // *MIS TRAMITES
@@ -125,7 +215,7 @@ class ExpedienteController extends Controller
 
         return Inertia::render('Admin/Expediente/emitidos', [
             'items' => $items,
-            'headers' => $this->expediente->headers,
+            'headers' => Expediente::$headers,
             'filters' => [
                 'search' => $request->search,
             ],
@@ -136,7 +226,7 @@ class ExpedienteController extends Controller
     public function getAdminsByOfic($oficina)
     {
 
-        $admin = Admin::where('ofic_id', $oficina)->get();
+        $admin = Admin::where('ofic_id', $oficina)->where('id', '!=', $this->admin->id)->get();
 
         return response()->json($admin);
     }
@@ -148,7 +238,7 @@ class ExpedienteController extends Controller
         return response()->json($nextNum);
     }
 
-    function storeExpedienteArchivo($tipo, $expediente, $archivo)
+    function storeExpedienteArchivo($tipo, $expediente, $archivo, $tramite = null)
     {
 
         ExpedienteArchivo::create([
@@ -156,6 +246,7 @@ class ExpedienteController extends Controller
             'exar_url' =>   $archivo->arch_path,
             'exar_expe_id' => $expediente,
             'exar_arch_id' => $archivo->arch_id,
+            'exar_tram_id' => $tramite,
         ]);
     }
 
@@ -187,9 +278,7 @@ class ExpedienteController extends Controller
 
         $fileName = '' . $name . '.' . $file->getClientOriginalExtension();
 
-        $path =  Storage::disk('file')->put($fileName, file_get_contents($file));
-
-
+        Storage::disk('file')->put($fileName, file_get_contents($file));
 
         return Archivo::create([
             'arch_nombre' => $fileName,

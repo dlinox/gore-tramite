@@ -17,7 +17,8 @@ return new class extends Migration
             $table->boolean('tram_notificar')->default(0);
             $table->dateTime('tram_fecha_recibido')->nullable();
             $table->dateTime('tram_fecha_tramitado')->nullable();
-            $table->char('tram_periodo', 4)->nullable();//!se optiene del expediente
+            $table->char('tram_periodo', 4)->nullable(); //!se optiene del expediente
+            $table->text('tram_observacion')->nullable();
 
             $table->unsignedBigInteger('tram_tram_padre')->nullable();
             $table->unsignedBigInteger('tram_expe_id');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tram_admin_fin')->nullable();
             $table->unsignedBigInteger('tram_acci_id')->nullable();
             $table->unsignedBigInteger('tram_esta_id')->nullable();
-            $table->unsignedBigInteger('tram_docu_id')->nullable();//!no se llena
+            $table->unsignedBigInteger('tram_docu_id')->nullable(); //!no se llena
 
             $table->index('tram_expe_id');
             $table->index('tram_ofic_ini');

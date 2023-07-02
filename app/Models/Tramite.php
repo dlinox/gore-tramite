@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+
 
 class Tramite extends Model
 {
@@ -19,7 +21,7 @@ class Tramite extends Model
         'tram_fecha_tramitado',
         'tram_tram_padre',
         'tram_periodo',
-
+        'tram_observacion',
         'tram_esta_id',
         'tram_expe_id',
         'tram_ofic_ini',
@@ -36,6 +38,10 @@ class Tramite extends Model
         'tram_fecha_recibido' => 'date',
         'tram_fecha_tramitado' => 'date',
     ];
+
+  
+
+
 
     public function expediente()
     {
@@ -67,4 +73,5 @@ class Tramite extends Model
         return $this->belongsTo(Accion::class, 'tram_acci_id');
     }
 
+    
 }
