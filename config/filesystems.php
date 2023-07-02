@@ -37,7 +37,7 @@ return [
             'visibility' => 'public',
         ],
 
-        'file' => [ //Archivos- documentos
+        'file' => [
             'driver' => 'local',
             'root' => storage_path('app/uploads/files'),
             'url' => env('APP_URL') . '/uploads/uploads-files',

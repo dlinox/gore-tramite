@@ -27,7 +27,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'message' => 'Credenciales incorrectas.',
+            'message' => 'Credenciales incorrectas..',
             'status' => false
         ]);
     }
