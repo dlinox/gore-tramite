@@ -2,11 +2,10 @@
     <v-app id="inspire">
         <v-app-bar flat extended="">
             <v-container class="fill-height d-flex align-center">
-                
-                <v-avatar density="x-large" rounded="0">
+                <div>
                     <Logo></Logo>
-                </v-avatar>
-            
+                </div>
+
                 <v-spacer></v-spacer>
                 <v-btn icon size="small" @click="router.delete('/sign-out')">
                     <v-icon>mdi-account</v-icon>

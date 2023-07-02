@@ -33,8 +33,6 @@
         </v-app-bar>
 
         <v-main>
-
-     
             <slot />
         </v-main>
 

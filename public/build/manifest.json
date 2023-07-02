@@ -1,6 +1,6 @@
 {
-  "_webfontloader-242ac5e9.js": {
-    "file": "assets/webfontloader-242ac5e9.js",
+  "_webfontloader-3e081904.js": {
+    "file": "assets/webfontloader-3e081904.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -42,9 +42,9 @@
       "assets/app-5bb2960b.css"
     ],
     "dynamicImports": [
-      "_webfontloader-242ac5e9.js"
+      "_webfontloader-3e081904.js"
     ],
-    "file": "assets/app-44f2319a.js",
+    "file": "assets/app-866b751c.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
