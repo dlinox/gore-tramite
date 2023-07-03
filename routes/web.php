@@ -16,17 +16,18 @@ use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProcesoRequisitoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\Usuario\Auth\AuthController;
+use App\Http\Controllers\Usuario\UsuarioController;
 use Inertia\Inertia;
 
 Route::get('/', [Controller::class,  'landingPage'])->name('landing');
 
-Route::name('admin.')->prefix('a')->group(function () {
+Route::middleware('auth:admin')->name('admin.')->prefix('a')->group(function () {
 
     Route::get('/login', [AdminAuthController::class, 'index'])->name('login');
     Route::post('/sign-in',  [AdminAuthController::class, 'signIn'])->name('sign-in');
     Route::delete('/sign-out',  [AdminAuthController::class, 'signOut'])->name('sign-out');
 
-    Route::middleware('auth:admin')->get('/',  function () {
+    Route::get('/',  function () {
         return Inertia::render('Admin/index');
     })->name('index'); //dashboard usuario
 
@@ -41,21 +42,21 @@ Route::name('admin.')->prefix('a')->group(function () {
 
 
 
-    Route::middleware('auth:admin')->name('consultas.')->prefix('consultas')->group(function () {
+    Route::name('consultas.')->prefix('consultas')->group(function () {
         Route::get('', [ConsultaController::class, 'index'])->name('index');
     });
 
-    Route::middleware('auth:admin')->name('reportes.')->prefix('reportes')->group(function () {
+    Route::name('reportes.')->prefix('reportes')->group(function () {
         Route::get('', [ReporteController::class, 'index'])->name('index');
     });
 
-    Route::middleware('auth:admin')->name('mensajes.')->prefix('mensajes')->group(function () {
+    Route::name('mensajes.')->prefix('mensajes')->group(function () {
         Route::get('', [MensajeController::class, 'index'])->name('index');
     });
 
 
 
-    Route::middleware('auth:admin')->name('expedientes.')->prefix('expedientes')->group(function () {
+    Route::name('expedientes.')->prefix('expedientes')->group(function () {
         Route::get('', [ExpedienteController::class, 'index'])->name('index');
 
         Route::get('internos', [ExpedienteController::class, 'internos'])->name('internos');
@@ -82,7 +83,7 @@ Route::name('admin.')->prefix('a')->group(function () {
         Route::get('get-admins-by-ofic/{oficina}', [ExpedienteController::class, 'getAdminsByOfic'])->name('get-admins-by-ofic');
     });
 
-    Route::middleware('auth:admin')->name('seguridad.')->prefix('seguridad')->group(function () {
+    Route::name('seguridad.')->prefix('seguridad')->group(function () {
         Route::resource('roles', RolController::class);
         Route::resource('administradores', AdminController::class);
     });
@@ -94,6 +95,10 @@ Route::name('users.')->prefix('')->group(function () {
     Route::post('/sign-in',  [AuthController::class, 'signIn'])->name('sign-in');
     Route::delete('/sign-out',  [AuthController::class, 'signOut'])->name('sign-out');
 
+
+    Route::get('/consultar', [UsuarioController::class, 'consultar'])->name('consultar');
+    Route::post('/consultar', [UsuarioController::class, 'consultarExpe'])->name('consultar-expe');
+    
 
     Route::middleware('auth')->get('virtual',  function () {
         return Inertia::render('Usuario/index');

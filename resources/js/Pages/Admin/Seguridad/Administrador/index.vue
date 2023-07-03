@@ -3,7 +3,7 @@
         <HeadingPage title="Administradores" subtitle="Seguridad">
         </HeadingPage>
 
-        <v-container fluid> Mensaje </v-container>
+        <v-container fluid> ... </v-container>
     </AdminLayout>
 </template>
 <script setup>

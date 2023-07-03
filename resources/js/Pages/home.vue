@@ -23,11 +23,11 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn color="white">
+            <v-btn color="white" @click="() => router.get('/consultar')">
                 consultar <v-icon end>mdi-card-search-outline</v-icon>
             </v-btn>
 
-            <v-btn color="white"  @click="() => router.get('/login')">
+            <v-btn color="white" @click="() => router.get('/login')">
                 ingresar <v-icon end>mdi-login</v-icon>
             </v-btn>
         </v-app-bar>
@@ -105,6 +105,7 @@
                                             class="ms-2"
                                             variant="outlined"
                                             size="small"
+                                            @click="() => router.get('/login')"
                                         >
                                             registrarme
                                             <v-icon end>mdi-plus </v-icon>
@@ -145,6 +146,9 @@
                                             class="ms-2"
                                             variant="outlined"
                                             size="small"
+                                            @click="
+                                                () => router.get('/consultar')
+                                            "
                                         >
                                             CONSULTAR
                                             <v-icon end>mdi-plus </v-icon>
@@ -168,8 +172,14 @@
                 <div
                     class="px-4 py-2light-blue-lighten-5 py-3 text-center w-100"
                 >
-                    {{ new Date().getFullYear() }} —
-                    <strong>STD</strong>
+                    <v-btn
+                        class="ms-2"
+                        variant="text"
+                        size="small"
+                        @click="() => router.get('/a/login')"
+                    >
+                        STD — ingresar
+                    </v-btn>
                 </div>
 
                 <div class="bg-white d-flex w-100 align-center px-4">
