@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AccionController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\Auth\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\RolController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\ExpedienteController;
@@ -42,7 +44,7 @@ Route::name('admin.')->prefix('a')->group(function () {
     Route::middleware('auth:admin')->name('consultas.')->prefix('consultas')->group(function () {
         Route::get('', [ConsultaController::class, 'index'])->name('index');
     });
-    
+
     Route::middleware('auth:admin')->name('reportes.')->prefix('reportes')->group(function () {
         Route::get('', [ReporteController::class, 'index'])->name('index');
     });
@@ -51,7 +53,7 @@ Route::name('admin.')->prefix('a')->group(function () {
         Route::get('', [MensajeController::class, 'index'])->name('index');
     });
 
-    
+
 
     Route::middleware('auth:admin')->name('expedientes.')->prefix('expedientes')->group(function () {
         Route::get('', [ExpedienteController::class, 'index'])->name('index');
@@ -78,6 +80,11 @@ Route::name('admin.')->prefix('a')->group(function () {
 
         Route::get('get-next-num-documento', [ExpedienteController::class, 'getNextNumDocumento'])->name('get-next-num-documento');
         Route::get('get-admins-by-ofic/{oficina}', [ExpedienteController::class, 'getAdminsByOfic'])->name('get-admins-by-ofic');
+    });
+
+    Route::middleware('auth:admin')->name('seguridad.')->prefix('seguridad')->group(function () {
+        Route::resource('roles', RolController::class);
+        Route::resource('administradores', AdminController::class);
     });
 });
 

@@ -176,6 +176,25 @@ const menuAdmininstrador = [
     },
 ];
 
+const menuSeguridad = [
+    {
+        title: "Roles",
+        value: "oficinas",
+        icon: null,
+        to: "seguridad/roles",
+        group: null,
+    },
+    {
+        title: "Administradores",
+        value: "oficinas",
+        icon: null,
+        to: "seguridad/administradores",
+        group: null,
+    },
+
+];
+
+
 const menuMain = [
     {
         title: "Dashboard",
@@ -234,6 +253,17 @@ const menuMain = [
         to: "#",
         group: menuAdmininstrador,
     },
+
+    {
+        title: "Seguridad",
+        value: "seguridad",
+        icon: "mdi-security",
+        to: "#",
+        group: menuSeguridad,
+    },
+
+
+    
 ];
 
 //const currentMenu = computed(() => router.page.url.split('/')[1] );

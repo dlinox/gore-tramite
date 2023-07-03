@@ -15,6 +15,35 @@
                     }
                 "
             />
+
+            <template v-slot:append>
+                <v-list lines="one" variant="tonal">
+                    <v-list-item>
+                        <template v-slot:append>
+                            <v-tooltip text="Salir">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn
+                                        v-bind="props"
+                                        color="red"
+                                        icon
+                                        rounded="lg"
+                                        variant="tonal"
+                                        size="small"
+                                        @click="router.delete('/a/sign-out')"
+                                    >
+                                        <v-icon>mdi-logout</v-icon>
+                                    </v-btn>
+                                </template>
+                            </v-tooltip>
+                        </template>
+
+                        <v-list-item-title> {{ user.name }} </v-list-item-title>
+                        <v-list-item-subtitle>
+                            {{ user.rol_name }} | {{ user.ofic_name }}
+                        </v-list-item-subtitle>
+                    </v-list-item>
+                </v-list>
+            </template>
         </v-navigation-drawer>
 
         <v-app-bar absolute elevation="0">
@@ -23,15 +52,34 @@
                 <img src="/images/logo.png" width="120" alt="" />
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <SwitchTheme />
+
             <v-btn
-                color="red"
+                class="me-2"
+                color="blue"
+                rounded="lg"
                 icon
+                variant="tonal"
                 size="small"
-                @click="router.delete('/a/sign-out')"
             >
-                <v-icon>mdi-logout</v-icon>
+                <v-badge floating :content="2">
+                    <v-icon>mdi-message-processing-outline</v-icon>
+                </v-badge>
             </v-btn>
+
+            <v-btn
+                class="me-2"
+                icon
+                color="teal"
+                rounded="lg"
+                variant="tonal"
+                size="small"
+            >
+                <v-badge floating :content="29">
+                    <v-icon>mdi-bell</v-icon>
+                </v-badge>
+            </v-btn>
+
+            <SwitchTheme />
         </v-app-bar>
 
         <v-main>
