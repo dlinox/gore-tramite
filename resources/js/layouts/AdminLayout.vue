@@ -133,7 +133,6 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
-import Logo from "../components/Logo.vue";
 import MainMenu from "../components/MainMenu.vue";
 import SwitchTheme from "../components/SwitchTheme.vue";
 

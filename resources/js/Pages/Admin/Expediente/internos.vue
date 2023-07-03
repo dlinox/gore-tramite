@@ -31,6 +31,7 @@
                 </v-menu>
             </template>
         </HeadingPage>
+ 
         <v-container fluid>
             <v-card>
                 <v-card-item>
@@ -54,69 +55,50 @@
 
                         <template v-slot:action="{ item }">
                             <div class="d-flex">
-                                <template v-if="item.tram_esta_id === 5">
-                                    <v-btn
-                                        class="text-caption"
-                                        density="comfortable"
-                                        variant="tonal"
-                                        color="indigo-accent-4"
-                                    >
-                                        <DialogConfirm
-                                            title="RECIBIR EXPEDIENTE"
-                                            text="¿Seguro de recibir este expediente?"
-                                            @onConfirm="
+                                <v-tooltip
+                                    text="Editar"
+                                    v-if="item.expe_editar"
+                                >
+                                    <template v-slot:activator="{ props }">
+                                        <v-btn
+                                            v-bind:="props"
+                                            icon
+                                            class="text-caption"
+                                            density="comfortable"
+                                            variant="tonal"
+                                            color="teal-darken-3"
+                                            @click="
                                                 () =>
-                                                    router.post(
-                                                        url + '/recibir',
-
-                                                        {
-                                                            tramite:
-                                                                item.tram_id,
-                                                        }
+                                                    router.get(
+                                                        url +
+                                                            '/' +
+                                                            item.tram_id +
+                                                            '/editar'
                                                     )
                                             "
-                                        />
+                                        >
+                                            <v-icon color="">
+                                                mdi-file-edit-outline
+                                            </v-icon>
+                                        </v-btn>
+                                    </template>
+                                </v-tooltip>
 
-                                        <v-icon start color="">
-                                            mdi-send-check-outline
-                                        </v-icon>
-                                        Recibir
-                                    </v-btn>
-                                </template>
-                                <template v-else>
-                                    <v-btn
-                                        class="text-caption"
-                                        density="comfortable"
-                                        variant="tonal"
-                                        color="teal-darken-1"
-                                        @click="
-                                            () =>
-                                                router.get(
-                                                    url +
-                                                        '/' +
-                                                        item.tram_id +
-                                                        '/revisar'
-                                                )
-                                        "
-                                    >
-                                        <v-icon start color="">
-                                            mdi-send-check-outline
-                                        </v-icon>
-                                        Ver
-                                    </v-btn>
-                                </template>
-
-                                <v-btn
-                                    class="text-caption"
-                                    density="comfortable"
-                                    variant="tonal"
-                                    color="blue-grey-darken-2"
-                                >
-                                    <v-icon start color=""
-                                        >mdi-card-search-outline</v-icon
-                                    >
-                                    {{ item.expe_codigo }}
-                                </v-btn>
+                                <v-tooltip text="Seguimiento">
+                                    <template v-slot:activator="{ props }">
+                                        <v-btn
+                                            v-bind:="props"
+                                            class="text-caption"
+                                            variant="tonal"
+                                            color="blue-grey-darken-1"
+                                        >
+                                            <v-icon start color=""
+                                                >mdi-card-search-outline</v-icon
+                                            >
+                                            {{ item.expe_codigo }}
+                                        </v-btn>
+                                    </template>
+                                </v-tooltip>
                             </div>
                         </template>
 
@@ -124,10 +106,10 @@
                             {{ item.proceso.proc_nombre }}
                         </template>
 
-                        <template v-slot:item.tram_esta_nombre="{ item }">
+                        <template v-slot:item.expe_esta_id="{ item }">
                             <v-chip label color="black">
                                 <small>
-                                    {{ item.tram_esta_nombre }}
+                                    {{ item.estado.esta_nombre }}
                                 </small>
                             </v-chip>
                         </template>
@@ -163,7 +145,7 @@ const props = defineProps({
     perPageOptions: Array,
 });
 
-const url = "/a/expedientes";
+const url = "/a/expedientes/internos";
 const primaryKey = "expe_id";
 
 const menuNuevo = [

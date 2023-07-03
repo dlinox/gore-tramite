@@ -538,9 +538,6 @@
                 </v-row>
             </v-form>
         </v-container>
-        <pre>
-            {{ form }}
-        </pre>
     </AdminLayout>
 </template>
 <script setup>
