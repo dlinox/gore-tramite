@@ -19,7 +19,9 @@
 
         <v-app-bar absolute elevation="0">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title> <Logo LogoWidth="120" /> </v-toolbar-title>
+            <v-toolbar-title>
+                <img src="/images/logo.png" width="120" alt="" />
+            </v-toolbar-title>
             <v-spacer></v-spacer>
             <SwitchTheme />
             <v-btn

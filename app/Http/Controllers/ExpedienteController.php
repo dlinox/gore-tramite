@@ -41,6 +41,43 @@ class ExpedienteController extends Controller
         return Inertia::render('Admin/Expediente/index', $data);
     }
 
+    public function internos(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/internos', $data);
+    }
+
+    public function externos(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/externos', $data);
+    }
+
+    public function derivados(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/derivados', $data);
+    }
+
+    public function archivados(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/archivados', $data);
+    }
+
+    public function finalizados(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/finalizados', $data);
+    }
+
+    public function observados(Request $request)
+    {
+        $data = Expediente::getPendientes($request, $this->admin);
+        return Inertia::render('Admin/Expediente/observados', $data);
+    }
+
+
 
     public function show($tramite)
     {

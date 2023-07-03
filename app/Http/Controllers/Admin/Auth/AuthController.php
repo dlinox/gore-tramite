@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::guard('admin')->attempt($request->all())) {
             $request->session()->regenerate();
-            return redirect()->intended('/a');
+            return redirect('/a');
         }
 
         return back()->withErrors([

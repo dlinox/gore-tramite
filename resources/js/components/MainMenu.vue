@@ -98,20 +98,6 @@ const menuOpen = ref([router.page.url.split("/")[2]]);
 
 const menuExpedientes = [
     {
-        title: "Bandeja",
-        value: "bandeja",
-        icon: null,
-        to: "expedientes",
-        group: null,
-    },
-    {
-        title: "Mis tramites",
-        value: "emitidos",
-        icon: null,
-        to: "expedientes/emitidos",
-        group: null,
-    },
-    {
         title: "Internos",
         value: "internos",
         icon: null,
@@ -123,6 +109,37 @@ const menuExpedientes = [
         value: "expedientes/externos",
         icon: null,
         to: "expedientes/externos",
+        group: null,
+    },
+
+    {
+        title: "Archivados",
+        value: "expedientes/externos",
+        icon: null,
+        to: "expedientes/archivados",
+        group: null,
+    },
+
+    {
+        title: "Derivados",
+        value: "expedientes/externos",
+        icon: null,
+        to: "expedientes/derivados",
+        group: null,
+    },
+
+    {
+        title: "Finalizados",
+        value: "expedientes/externos",
+        icon: null,
+        to: "expedientes/finalizados",
+        group: null,
+    },
+    {
+        title: "Observados",
+        value: "expedientes/observados",
+        icon: null,
+        to: "expedientes/observados",
         group: null,
     },
 ];
@@ -169,11 +186,43 @@ const menuMain = [
     },
 
     {
+        title: "Bandeja",
+        value: "bandeja",
+        icon: "mdi-inbox-arrow-down-outline",
+        to: "expedientes",
+        group: null,
+    },
+
+    {
         title: "Expedientes",
         value: "expedientes",
         icon: "mdi-file-cabinet",
         to: "#",
         group: menuExpedientes,
+    },
+
+    {
+        title: "Consultas",
+        value: "consultar",
+        icon: "mdi-inbox-arrow-down-outline",
+        to: "consultas",
+        group: null,
+    },
+
+    {
+        title: "Reportes",
+        value: "consultar",
+        icon: "mdi-inbox-arrow-down-outline",
+        to: "reportes",
+        group: null,
+    },
+
+    {
+        title: "Mensajes",
+        value: "consultar",
+        icon: "mdi-inbox-arrow-down-outline",
+        to: "mensajes",
+        group: null,
     },
 
     {
