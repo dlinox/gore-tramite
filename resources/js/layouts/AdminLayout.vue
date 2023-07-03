@@ -37,9 +37,9 @@
                             </v-tooltip>
                         </template>
 
-                        <v-list-item-title> {{ user.name }} </v-list-item-title>
+                        <v-list-item-title> {{ user?.name }} </v-list-item-title>
                         <v-list-item-subtitle>
-                            {{ user.rol_name }} | {{ user.ofic_name }}
+                            {{ user?.rol_name }} | {{ user?.ofic_name }}
                         </v-list-item-subtitle>
                     </v-list-item>
                 </v-list>
