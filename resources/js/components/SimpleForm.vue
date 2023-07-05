@@ -14,6 +14,9 @@
                             :label="field.label"
                             :rules="field.required ? [isRequired] : []"
                             :error-messages="form.errors[`${field.key}`]"
+                            :disabled="field.disabled"
+                            :readonly="field.readonly"
+                            :clearable="field.clearable"
                         ></v-text-field>
                     </template>
                     <template v-else-if="field.type === 'select'">

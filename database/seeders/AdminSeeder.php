@@ -36,7 +36,7 @@ class AdminSeeder extends Seeder
             'ofic_id' => 2,
             'pers_id' => 1,
             'ofic_name' => 'OTI',
-            'rol_name' => 'Administrador',
+            'rol_name' => 'Super Admin',
             'active' => true,
         ]);
 

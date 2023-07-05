@@ -17,13 +17,18 @@
                                         url="/autocomplete/personas"
                                         item-title="pers_nombre"
                                         item-value="pers_id"
-                                        label="Buscart Persona"
+                                        label="Buscar Persona"
                                         return-object
                                         itemCustom
                                         :error-messages="
                                             form.errors.expe_pers_id
                                         "
-                                        @update:modelValue=" $event ? form.expe_pers_id = $event?.pers_id : form.expe_pers_id = null   "
+                                        @update:modelValue="
+                                            $event
+                                                ? (form.expe_pers_id =
+                                                      $event?.pers_id)
+                                                : (form.expe_pers_id = null)
+                                        "
                                     >
                                         <template
                                             v-slot:custom="{ props, item }"
@@ -51,7 +56,7 @@
                                         <template v-slot:content="{ dialog }">
                                             <FormularioPersona
                                                 @on-cancel="dialog"
-                                                @onSubmit="persona = $event "
+                                                @onSubmit="persona = $event"
                                                 url="/a/personas"
                                                 :formStructure="
                                                     formPersonaStructure
