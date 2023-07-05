@@ -21,10 +21,14 @@ use Inertia\Inertia;
 
 Route::get('/', [Controller::class,  'landingPage'])->name('landing');
 
+
+
+Route::get('a/login', [AdminAuthController::class, 'index'])->name('a.login');
+Route::post('a/sign-in',  [AdminAuthController::class, 'signIn'])->name('a.sign-in');
+
 Route::middleware('auth:admin')->name('admin.')->prefix('a')->group(function () {
 
-    Route::get('/login', [AdminAuthController::class, 'index'])->name('login');
-    Route::post('/sign-in',  [AdminAuthController::class, 'signIn'])->name('sign-in');
+
     Route::delete('/sign-out',  [AdminAuthController::class, 'signOut'])->name('sign-out');
 
     Route::get('/',  function () {
@@ -98,7 +102,7 @@ Route::name('users.')->prefix('')->group(function () {
 
     Route::get('/consultar', [UsuarioController::class, 'consultar'])->name('consultar');
     Route::post('/consultar', [UsuarioController::class, 'consultarExpe'])->name('consultar-expe');
-    
+
 
     Route::middleware('auth')->get('virtual',  function () {
         return Inertia::render('Usuario/index');
