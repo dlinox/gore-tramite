@@ -54,11 +54,6 @@ class AdminController extends Controller
                 $temp1 = $request->ofic_id;
                 $temp2 =  $administradore->ofic_id;
 
-
-                $temp3 = $request->rol_name;
-                $temp4 =  $administradore->rol_name;
-
-
                 if ($administradore->rol_name != $request->rol_name) {
                     $administradore->syncRoles([]);
                     $administradore->assignRole($request->rol_name);
